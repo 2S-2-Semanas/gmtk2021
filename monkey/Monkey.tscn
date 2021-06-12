@@ -16,11 +16,13 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=3]
+radius = 8.61453
 
 [sub_resource type="CircleShape2D" id=4]
+radius = 8.83946
 
-[sub_resource type="CircleShape2D" id=5]
-radius = 16.1362
+[sub_resource type="CapsuleShape2D" id=5]
+height = 33.3668
 
 [node name="Monkey" type="RigidBody2D"]
 script = ExtResource( 2 )
@@ -49,10 +51,11 @@ position = Vector2( -24.0543, -0.668175 )
 shape = SubResource( 4 )
 
 [node name="MonkeyCollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 5.3454 )
+position = Vector2( 2.00452, 4.89995 )
 shape = SubResource( 5 )
 
 [node name="LeftArmPosition2D" type="Position2D" parent="."]
 position = Vector2( -30.245, 0 )
 
 [connection signal="body_entered" from="MonkeyAnimatedSprite/RightArmArea2D" to="." method="_on_RightArmArea2D_body_entered"]
+[connection signal="body_entered" from="MonkeyAnimatedSprite/LeftArmArea2D" to="." method="_on_LeftArmArea2D_body_entered"]

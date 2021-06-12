@@ -9,9 +9,8 @@ height = 4.29208
 
 [node name="LianaSegment" type="RigidBody2D"]
 position = Vector2( 0.25, 20 )
-collision_layer = 16
-collision_mask = 16
-mass = 0.306122
+collision_layer = 4
+collision_mask = 2
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
