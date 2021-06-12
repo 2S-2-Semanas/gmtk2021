@@ -26,14 +26,19 @@ height = 25.9245
 [node name="Monkey" type="RigidBody2D"]
 script = ExtResource( 2 )
 
+[node name="RightArmPosition2D" type="Position2D" parent="."]
+position = Vector2( 30.2453, 0 )
+
 [node name="MonkeyAnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
 playing = true
 
 [node name="RightArmArea2D" type="Area2D" parent="MonkeyAnimatedSprite"]
+collision_layer = 7
+collision_mask = 7
 
 [node name="RightArmCollisionShape2D2" type="CollisionShape2D" parent="MonkeyAnimatedSprite/RightArmArea2D"]
-position = Vector2( 24.277, -0.222725 )
+position = Vector2( 24.277, -0.44545 )
 shape = SubResource( 3 )
 
 [node name="LeftArmArea2D" type="Area2D" parent="MonkeyAnimatedSprite"]
@@ -47,3 +52,8 @@ shape = SubResource( 4 )
 [node name="MonkeyCollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 5.3454 )
 shape = SubResource( 5 )
+
+[node name="LeftArmPosition2D" type="Position2D" parent="."]
+position = Vector2( -30.245, 0 )
+
+[connection signal="body_entered" from="MonkeyAnimatedSprite/RightArmArea2D" to="." method="_on_RightArmArea2D_body_entered"]
