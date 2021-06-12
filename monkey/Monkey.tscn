@@ -43,8 +43,8 @@ position = Vector2( 24.277, -0.44545 )
 shape = SubResource( 3 )
 
 [node name="LeftArmArea2D" type="Area2D" parent="MonkeyAnimatedSprite"]
-collision_layer = 2
-collision_mask = 3
+collision_layer = 7
+collision_mask = 7
 
 [node name="LeftArmCollisionShape2D" type="CollisionShape2D" parent="MonkeyAnimatedSprite/LeftArmArea2D"]
 position = Vector2( -24.0543, -0.668175 )
