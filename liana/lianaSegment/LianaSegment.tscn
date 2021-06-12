@@ -10,7 +10,6 @@ height = 4.29208
 [node name="LianaSegment" type="RigidBody2D"]
 position = Vector2( -0.0306091, 14.9465 )
 collision_layer = 4
-collision_mask = 2
 can_sleep = false
 script = ExtResource( 2 )
 
