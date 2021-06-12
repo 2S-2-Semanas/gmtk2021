@@ -61,6 +61,7 @@ func _on_RightArmArea2D_body_entered(body):
 	if (monkey != null):
 		_grab_right_hand(body)
 		_right_monkey = monkey
+		event_bus.emit_signal('monkey_grabbed')
 	elif (Input.is_action_pressed("grab")):
 		_grab_right_hand(body)
 		_liana_grabbed = true
@@ -77,6 +78,7 @@ func _on_LeftArmArea2D_body_entered(body):
 	if (monkey != null):
 		_grab_left_hand(body)
 		_left_monkey = monkey
+		event_bus.emit_signal('monkey_grabbed')
 	elif (Input.is_action_pressed("grab")):
 		_grab_left_hand(body)
 		_liana_grabbed = true
