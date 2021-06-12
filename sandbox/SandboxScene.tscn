@@ -1,13 +1,16 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://monkey/Monkey.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sandbox/Ground.tscn" type="PackedScene" id=2]
 [ext_resource path="res://sandbox/Rock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://monkey/CameraMovement.gd" type="Script" id=4]
 [ext_resource path="res://liana/Liana.tscn" type="PackedScene" id=5]
+[ext_resource path="res://sandbox/SandboxScene.gd" type="Script" id=6]
 [ext_resource path="res://icon.png" type="Texture" id=7]
+[ext_resource path="res://banana/Banana.tscn" type="PackedScene" id=8]
 
 [node name="Sandbox" type="Node2D"]
+script = ExtResource( 6 )
 
 [node name="Node2D" type="Node2D" parent="."]
 position = Vector2( 516.568, 299.861 )
@@ -29,10 +32,10 @@ position = Vector2( 516.188, 608.112 )
 position = Vector2( -351.439, -613.652 )
 
 [node name="Monkey" parent="." instance=ExtResource( 1 )]
-position = Vector2( 477.542, -11.6674 )
+position = Vector2( 543.229, -28.6188 )
 
 [node name="Monkey2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 374.928, 21.5444 )
+position = Vector2( 377.047, 17.3066 )
 
 [node name="Liana" parent="." instance=ExtResource( 5 )]
 position = Vector2( 407.944, 61.6606 )
@@ -42,3 +45,6 @@ position = Vector2( 685.029, 34.3089 )
 
 [node name="Liana3" parent="." instance=ExtResource( 5 )]
 position = Vector2( 513.783, 29.552 )
+
+[node name="Banana" parent="." instance=ExtResource( 8 )]
+position = Vector2( 605.306, 220.003 )
