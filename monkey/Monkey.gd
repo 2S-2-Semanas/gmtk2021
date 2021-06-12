@@ -11,14 +11,14 @@ var _right_monkey: Monkey
 var _left_monkey: Monkey
 
 var _liana_grabbed:= false
+var _liana_grabbed_left:= false
+var _liana_grabbed_right:= false
 
-var _direction := 0
 
-
+var _direction := 0 
 func _init():
 	_init_left_pin_joint()
-	_init_right_pin_joint()
-
+	_init_right_pin_joint() 
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("ui_left"):
@@ -55,13 +55,11 @@ func _on_RightArmArea2D_body_entered(body):
 		return
 	
 	var monkey = body as Monkey
-	if (monkey != null):
-		_grab_right_hand(body)
-		_right_monkey = monkey
-		event_bus.emit_signal('monkey_grabbed')
-	elif (Input.is_action_pressed("grab") and !_liana_grabbed):
+	if (monkey == null) && (Input.is_action_pressed("grab") and !_liana_grabbed):
 		_grab_right_hand(body)
 		_liana_grabbed = true
+		_liana_grabbed_left = false
+		_liana_grabbed_right = true
 
 
 func _on_LeftArmArea2D_body_entered(body):
@@ -72,14 +70,52 @@ func _on_LeftArmArea2D_body_entered(body):
 		return
 	
 	var monkey = body as Monkey
-	if (monkey != null):
+	if (monkey == null) && (Input.is_action_pressed("grab") and !_liana_grabbed):
 		_grab_left_hand(body)
-		_left_monkey = monkey
-		event_bus.emit_signal('monkey_grabbed')
-	elif (Input.is_action_pressed("grab") and !_liana_grabbed):
-		_grab_left_hand(body)
-		_liana_grabbed = true
+		_liana_grabbed = true 
+		_liana_grabbed_left = true
+		_liana_grabbed_right = false
 
+func _on_LeftArmArea2D_area_entered(area: Area2D):
+	var monkey = area.get_parent() as Monkey
+	if (monkey != null): 
+		if(check_grab_monkey(monkey, true)):
+			_grab_left_hand(monkey) 
+			event_bus.emit_signal('monkey_grabbed')
+		_left_monkey = monkey
+
+func _on_RightArmArea2D_area_entered(area: Area2D): 
+	var monkey = area.get_parent() as Monkey
+	if (monkey != null):
+		if(check_grab_monkey(monkey, false)):
+			_grab_right_hand(monkey) 
+			event_bus.emit_signal('monkey_grabbed')
+		_right_monkey = monkey
+
+func check_grab_monkey(monkey: Monkey, is_left_hand):
+	if (monkey._left_monkey != null && monkey._left_monkey == self):
+		return false
+	if (monkey._right_monkey != null && monkey._right_monkey == self):
+		return false
+
+	if (self._left_monkey != null && self._left_monkey == monkey):
+		return false
+
+	if (self._right_monkey != null && self._right_monkey == monkey):
+		return false 
+
+	if (self._left_monkey != null && self._right_monkey != null):
+		return false
+		
+	if (is_left_hand):
+		if (self._left_monkey != null || self._liana_grabbed_left):
+			return false 
+
+	if (!is_left_hand):
+		if(self._right_monkey != null || self._liana_grabbed_right):
+			return false 
+		
+	return true 
 
 func _release_liana():
 	_release_right_hand()
@@ -87,7 +123,6 @@ func _release_liana():
 
 
 func _grab_right_hand(body):
-	print(body)
 	_right_pin_joint.position = $RightArmPosition2D.position
 	_right_pin_joint.node_a = get_path()
 	_right_pin_joint.node_b = body.get_path()
@@ -104,7 +139,9 @@ func _release_right_hand():
 		return
 		
 	_right_pin_joint.node_b = get_path()
-	_liana_grabbed = false
+	if (_liana_grabbed_right):
+		_liana_grabbed = false
+		_liana_grabbed_right = false
 
 
 func _release_left_hand():
@@ -112,4 +149,7 @@ func _release_left_hand():
 		return
 		
 	_left_pin_joint.node_b = get_path()
-	_liana_grabbed = false
+
+	if (_liana_grabbed_left):
+		_liana_grabbed = false
+		_liana_grabbed_left = false
