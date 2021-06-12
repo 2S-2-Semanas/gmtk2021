@@ -5,20 +5,24 @@ class_name Monkey
 const IMPULSE := Vector2(1500, 150)
 const IMPULSE_AFTER_RELEASE := Vector2(300, -1000)
 
+signal liana_grabed
+signal liana_released
+
 var _left_pin_joint: PinJoint2D
 var _right_pin_joint: PinJoint2D
 
 var _right_monkey: Monkey
 var _left_monkey: Monkey
 
-var _liana_grabbed:= false
-
 var _direction := 0
 var _speed := 1
 
-func _init():
+func _ready():
 	_init_left_pin_joint()
 	_init_right_pin_joint()
+	
+	connect("liana_grabed", MonkeyGlobal, "_grab_liana")
+	connect("liana_released", MonkeyGlobal, "_release_liana")
 
 
 func _physics_process(_delta):
@@ -30,10 +34,10 @@ func _physics_process(_delta):
 		_direction = 0
 		
 	if (Input.is_action_just_released("grab")):
-		if(_liana_grabbed):
+		if(MonkeyGlobal._liana_grabbed):
 			apply_impulse(Vector2.ZERO, Vector2(IMPULSE_AFTER_RELEASE.x * _direction, IMPULSE_AFTER_RELEASE.y))
 		_release_liana()
-	if (_liana_grabbed):
+	if (MonkeyGlobal._liana_grabbed):
 		var resulting_impulse = IMPULSE
 		resulting_impulse.x = IMPULSE.x * _direction *_delta
 		resulting_impulse.y = IMPULSE.y * _delta
@@ -67,16 +71,13 @@ func _on_RightArmArea2D_body_entered(body):
 		_grab_right_hand(body)
 		_right_monkey = monkey
 		event_bus.emit_signal('monkey_grabbed')
-	elif (Input.is_action_pressed("grab") and !_liana_grabbed):
+	elif (Input.is_action_pressed("grab") and !MonkeyGlobal._liana_grabbed):
 		_grab_right_hand(body)
-		_liana_grabbed = true
+		emit_signal("liana_grabed")
 
 
 func _on_LeftArmArea2D_body_entered(body):
 	if (_left_monkey != null):
-		return
-		
-	if (_liana_grabbed):
 		return
 	
 	var monkey = body as Monkey
@@ -84,18 +85,12 @@ func _on_LeftArmArea2D_body_entered(body):
 		_grab_left_hand(body)
 		_left_monkey = monkey
 		event_bus.emit_signal('monkey_grabbed')
-	elif (Input.is_action_pressed("grab") and !_liana_grabbed):
+	elif (Input.is_action_pressed("grab") and !MonkeyGlobal._liana_grabbed):
 		_grab_left_hand(body)
-		_liana_grabbed = true
-
-
-func _release_liana():
-	_release_right_hand()
-	_release_left_hand()
+		emit_signal("liana_grabed")
 
 
 func _grab_right_hand(body):
-	print(body)
 	_right_pin_joint.position = $RightArmPosition2D.position
 	_right_pin_joint.node_a = get_path()
 	_right_pin_joint.node_b = body.get_path()
@@ -107,12 +102,17 @@ func _grab_left_hand(body):
 	_left_pin_joint.node_b = body.get_path()
 
 
+func _release_lianas():
+	_release_right_hand()
+	_release_left_hand()
+
+
 func _release_right_hand():
 	if (_right_monkey != null):
 		return
 		
 	_right_pin_joint.node_b = get_path()
-	_liana_grabbed = false
+	emit_signal("liana_released")
 
 
 func _release_left_hand():
@@ -120,4 +120,4 @@ func _release_left_hand():
 		return
 		
 	_left_pin_joint.node_b = get_path()
-	_liana_grabbed = false
+	emit_signal("liana_released")
