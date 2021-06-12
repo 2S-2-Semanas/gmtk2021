@@ -51,10 +51,8 @@ func _init_left_pin_joint():
 
 
 func _on_RightArmArea2D_body_entered(body):
-	if (_right_monkey != null):
-		return
-		
-	if (_liana_grabbed):
+	print(body)
+	if (_right_monkey != null or _liana_grabbed):
 		return
 	
 	var monkey = body as Monkey
@@ -89,12 +87,15 @@ func _release_liana():
 
 
 func _grab_right_hand(body):
+	print(body)
 	_right_pin_joint.position = $RightArmPosition2D.position
+	_right_pin_joint.node_a = get_path()
 	_right_pin_joint.node_b = body.get_path()
 
 
 func _grab_left_hand(body):
 	_left_pin_joint.position = $LeftArmPosition2D.position
+	_left_pin_joint.node_a = get_path()
 	_left_pin_joint.node_b = body.get_path()
 
 

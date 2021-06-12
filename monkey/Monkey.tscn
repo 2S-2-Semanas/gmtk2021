@@ -56,5 +56,6 @@ shape = SubResource( 5 )
 
 [node name="LeftArmPosition2D" type="Position2D" parent="."]
 position = Vector2( -30.245, 0 )
+
 [connection signal="body_entered" from="MonkeyAnimatedSprite/RightArmArea2D" to="." method="_on_RightArmArea2D_body_entered"]
 [connection signal="body_entered" from="MonkeyAnimatedSprite/LeftArmArea2D" to="." method="_on_LeftArmArea2D_body_entered"]
