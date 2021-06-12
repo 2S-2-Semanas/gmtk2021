@@ -39,6 +39,7 @@ func _on_RightArmArea2D_body_entered(body):
 	var monkey = body as Monkey
 	if (monkey != null):
 		right_monkey = monkey
+		event_bus.emit_signal('monkey_grabbed')
 	
 	right_pin_joint.position = $RightArmPosition2D.position
 	right_pin_joint.node_a = get_path()
@@ -55,6 +56,7 @@ func _on_LeftArmArea2D_body_entered(body):
 	var monkey = body as Monkey
 	if (monkey != null):
 		left_monkey = monkey
+		event_bus.emit_signal('monkey_grabbed')
 	left_pin_joint.position = $LeftArmPosition2D.position
 	left_pin_joint.node_a = get_path()
 	left_pin_joint.node_b = body.get_path()

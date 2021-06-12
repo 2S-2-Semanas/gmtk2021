@@ -24,6 +24,10 @@ config/name="gmtk2021"
 run/main_scene="res://sandbox/SandboxScene.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+event_bus="*res://event_bus.gd"
+
 [input]
 
 grab={
