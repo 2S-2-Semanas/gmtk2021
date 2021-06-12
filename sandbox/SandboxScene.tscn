@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://monkey/Monkey.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sandbox/Ground.tscn" type="PackedScene" id=2]
 [ext_resource path="res://sandbox/Rock.tscn" type="PackedScene" id=3]
+[ext_resource path="res://monkey/CameraMovement.gd" type="Script" id=4]
 
 [node name="Sandbox" type="Node2D"]
 
@@ -14,3 +15,10 @@ position = Vector2( 71.9189, -359.162 )
 
 [node name="Monkey" parent="." instance=ExtResource( 1 )]
 position = Vector2( 538.182, 176.787 )
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2( 516.568, 299.861 )
+
+[node name="Camera2D" type="Camera2D" parent="Node2D"]
+current = true
+script = ExtResource( 4 )
