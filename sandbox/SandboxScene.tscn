@@ -1,12 +1,26 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://monkey/Monkey.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sandbox/Ground.tscn" type="PackedScene" id=2]
 [ext_resource path="res://sandbox/Rock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://monkey/CameraMovement.gd" type="Script" id=4]
 [ext_resource path="res://liana/Liana.tscn" type="PackedScene" id=5]
+[ext_resource path="res://icon.png" type="Texture" id=7]
 
 [node name="Sandbox" type="Node2D"]
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2( 516.568, 299.861 )
+
+[node name="Camera2D" type="Camera2D" parent="Node2D"]
+current = true
+smoothing_enabled = true
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="Node2D"]
+position = Vector2( 6.10352e-05, -1.88776 )
+scale = Vector2( 9.19991, 8.90495 )
+texture = ExtResource( 7 )
 
 [node name="Ground" parent="." instance=ExtResource( 2 )]
 position = Vector2( 516.188, 608.112 )
@@ -19,13 +33,6 @@ position = Vector2( 543.229, -28.6188 )
 
 [node name="Monkey2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 377.047, 17.3066 )
-
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2( 516.568, 299.861 )
-
-[node name="Camera2D" type="Camera2D" parent="Node2D"]
-current = true
-script = ExtResource( 4 )
 
 [node name="Liana" parent="." instance=ExtResource( 5 )]
 position = Vector2( 407.944, 61.6606 )
