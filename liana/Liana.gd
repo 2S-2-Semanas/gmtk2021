@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var segmentScene = preload('res://liana/LianaSegment/LianaSegment.tscn')
+var segmentScene = preload('res://liana/lianaSegment/LianaSegment.tscn')
 
 var segments: Array = []
 
@@ -28,6 +28,7 @@ func _ready():
 
 		joint.node_a = lastSegment.get_path()
 		joint.node_b = segment.get_path() 
+		joint.position.y = segment.joinPoint
 
 		lastSegment.add_child(joint)  
 
