@@ -5,10 +5,9 @@ var segmentScene = preload('res://liana/lianaSegment/LianaSegment.tscn')
 
 var segments: Array = []
 
-var size = 20
+var size = 30
 
-onready var origin = $Origin
-onready var ball = $Ball
+onready var origin = $Origin 
 
 func _ready():
 
@@ -25,6 +24,8 @@ func _ready():
 
 		var joint = PinJoint2D.new()
 		joint.disable_collision = true
+		joint.bias = 0.9
+		joint.softness = 0.1
 
 		joint.node_a = lastSegment.get_path()
 		joint.node_b = segment.get_path() 
@@ -32,9 +33,4 @@ func _ready():
 
 		lastSegment.add_child(joint)  
 
-		lastSegment = segment
-
-func _input(event):
-	if event is InputEventAction:
-		if event.is_action_pressed('ui_accept'):
-			ball.global_position = get_global_mouse_position()
+		lastSegment = segment 

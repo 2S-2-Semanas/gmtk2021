@@ -3,10 +3,13 @@
 [ext_resource path="res://liana/lianaFragment.png" type="Texture" id=1]
 [ext_resource path="res://liana/LianaSegment/LianaSegment.gd" type="Script" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 5.8607, 7.07044 )
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 5.48619
+height = 4.29208
 
 [node name="LianaSegment" type="RigidBody2D"]
+collision_layer = 16
+collision_mask = 16
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
