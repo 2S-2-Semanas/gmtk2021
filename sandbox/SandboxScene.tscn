@@ -35,13 +35,7 @@ position = Vector2( -351.439, -613.652 )
 position = Vector2( 544.286, -17.9413 )
 
 [node name="Monkey2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 374.723, 10.1984 )
-
-[node name="Liana" parent="." instance=ExtResource( 5 )]
-position = Vector2( 407.944, 61.6606 )
-
-[node name="Liana2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 685.029, 34.3089 )
+position = Vector2( 55.6937, 536.88 )
 
 [node name="Liana3" parent="." instance=ExtResource( 5 )]
 position = Vector2( 513.783, 29.552 )

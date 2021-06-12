@@ -25,7 +25,7 @@ func _ready():
 
 		var joint = PinJoint2D.new()
 		joint.disable_collision = true
-		joint.bias = 1.0
+		joint.bias = 0.9
 		joint.softness = 0.4
 
 		joint.node_a = lastSegment.get_path()

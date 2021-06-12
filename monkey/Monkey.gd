@@ -2,7 +2,8 @@ extends RigidBody2D
 
 class_name Monkey
 
-const IMPULSE := Vector2(700, 0)
+const IMPULSE := Vector2(1500, 150)
+const IMPULSE_AFTER_RELEASE := Vector2(300, -1000)
 
 var _left_pin_joint: PinJoint2D
 var _right_pin_joint: PinJoint2D
@@ -13,7 +14,7 @@ var _left_monkey: Monkey
 var _liana_grabbed:= false
 
 var _direction := 0
-
+var _speed := 1
 
 func _init():
 	_init_left_pin_joint()
@@ -21,17 +22,24 @@ func _init():
 
 
 func _physics_process(_delta):
-	if Input.is_action_just_pressed("ui_left"):
-		_direction -= 1
-	elif Input.is_action_just_pressed("ui_right"):
-		_direction += 1
+	if Input.is_action_pressed("ui_left"):
+		_direction = - _speed
+	elif Input.is_action_pressed("ui_right"):
+		_direction = _speed
 	else:
 		_direction = 0
 		
-	if Input.is_action_just_released("grab"):
+	if (Input.is_action_just_released("grab")):
+		if(_liana_grabbed):
+			apply_impulse(Vector2.ZERO, Vector2(IMPULSE_AFTER_RELEASE.x * _direction, IMPULSE_AFTER_RELEASE.y))
 		_release_liana()
 	if (_liana_grabbed):
-		apply_impulse(Vector2.ZERO, IMPULSE * _direction)
+		var resulting_impulse = IMPULSE
+		resulting_impulse.x = IMPULSE.x * _direction *_delta
+		resulting_impulse.y = IMPULSE.y * _delta
+#		apply_impulse(Vector2.ZERO, resulting_impulse)
+		apply_impulse(Vector2.ZERO, resulting_impulse)
+#		apply_impulseVector2.ZERO, resulting_impulse)
 
 
 func _init_right_pin_joint():
