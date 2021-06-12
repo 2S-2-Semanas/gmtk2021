@@ -51,7 +51,6 @@ func _init_left_pin_joint():
 
 
 func _on_RightArmArea2D_body_entered(body):
-	print(body)
 	if (_right_monkey != null or _liana_grabbed):
 		return
 	
@@ -85,7 +84,6 @@ func _on_LeftArmArea2D_body_entered(body):
 func _release_liana():
 	_release_right_hand()
 	_release_left_hand()
-	print("liana release")
 
 
 func _grab_right_hand(body):

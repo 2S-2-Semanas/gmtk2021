@@ -29,10 +29,10 @@ position = Vector2( 516.188, 608.112 )
 position = Vector2( -351.439, -613.652 )
 
 [node name="Monkey" parent="." instance=ExtResource( 1 )]
-position = Vector2( 477.542, -11.6674 )
+position = Vector2( 544.286, -17.9413 )
 
 [node name="Monkey2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 374.928, 21.5444 )
+position = Vector2( 374.723, 10.1984 )
 
 [node name="Liana" parent="." instance=ExtResource( 5 )]
 position = Vector2( 407.944, 61.6606 )
