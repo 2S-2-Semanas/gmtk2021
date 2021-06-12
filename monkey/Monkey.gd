@@ -2,7 +2,7 @@ extends RigidBody2D
 
 class_name Monkey
 
-const IMPULSE := Vector2(100, 0)
+const IMPULSE := Vector2(700, 0)
 
 var _left_pin_joint: PinJoint2D
 var _right_pin_joint: PinJoint2D
@@ -51,8 +51,7 @@ func _init_left_pin_joint():
 
 
 func _on_RightArmArea2D_body_entered(body):
-	print(body)
-	if (_right_monkey != null or _liana_grabbed):
+	if (_right_monkey != null):
 		return
 	
 	var monkey = body as Monkey
@@ -60,7 +59,7 @@ func _on_RightArmArea2D_body_entered(body):
 		_grab_right_hand(body)
 		_right_monkey = monkey
 		event_bus.emit_signal('monkey_grabbed')
-	elif (Input.is_action_pressed("grab")):
+	elif (Input.is_action_pressed("grab") and !_liana_grabbed):
 		_grab_right_hand(body)
 		_liana_grabbed = true
 
@@ -77,7 +76,7 @@ func _on_LeftArmArea2D_body_entered(body):
 		_grab_left_hand(body)
 		_left_monkey = monkey
 		event_bus.emit_signal('monkey_grabbed')
-	elif (Input.is_action_pressed("grab")):
+	elif (Input.is_action_pressed("grab") and !_liana_grabbed):
 		_grab_left_hand(body)
 		_liana_grabbed = true
 
@@ -85,7 +84,6 @@ func _on_LeftArmArea2D_body_entered(body):
 func _release_liana():
 	_release_right_hand()
 	_release_left_hand()
-	print("liana release")
 
 
 func _grab_right_hand(body):

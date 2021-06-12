@@ -25,6 +25,7 @@ radius = 8.83946
 height = 33.3668
 
 [node name="Monkey" type="RigidBody2D"]
+mass = 6.0
 script = ExtResource( 2 )
 
 [node name="RightArmPosition2D" type="Position2D" parent="."]
