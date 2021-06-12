@@ -4,20 +4,21 @@ class_name Monkey
 
 const IMPULSE := Vector2(100, 0)
 
-var left_pin_joint: PinJoint2D
-var right_pin_joint: PinJoint2D
+var _left_pin_joint: PinJoint2D
+var _right_pin_joint: PinJoint2D
 
-var right_monkey: Monkey
-var left_monkey: Monkey
+var _right_monkey: Monkey
+var _left_monkey: Monkey
 
-var right_hand_grab := false
-var left_hand_grab := false
+var _liana_grabbed:= false
 
 var _direction := 0
 
-func _ready():
-	right_pin_joint = PinJoint2D.new()
-	left_pin_joint = PinJoint2D.new()
+
+func _init():
+	_init_left_pin_joint()
+	_init_right_pin_joint()
+
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("ui_left"):
@@ -29,45 +30,85 @@ func _physics_process(_delta):
 		
 	if Input.is_action_just_released("grab"):
 		_release_liana()
-	if (right_hand_grab or left_hand_grab):
+	if (_liana_grabbed):
 		apply_impulse(Vector2.ZERO, IMPULSE * _direction)
 
 
+func _init_right_pin_joint():
+	_right_pin_joint = PinJoint2D.new()
+	_right_pin_joint.node_a = get_path()
+	_right_pin_joint.node_b = get_path()
+	_right_pin_joint.bias = 0.9
+	add_child(_right_pin_joint)
+
+
+func _init_left_pin_joint():
+	_left_pin_joint = PinJoint2D.new()
+	_left_pin_joint.node_a = get_path()
+	_left_pin_joint.node_b = get_path()
+	_left_pin_joint.bias = 0.9
+	add_child(_left_pin_joint)
+
+
 func _on_RightArmArea2D_body_entered(body):
-	if (right_monkey != null or !Input.is_action_pressed("grab")):
+	if (_right_monkey != null):
 		return
+		
+	if (_liana_grabbed):
+		return
+	
 	var monkey = body as Monkey
 	if (monkey != null):
-		right_monkey = monkey
-		event_bus.emit_signal('monkey_grabbed')
-	
-	right_pin_joint.position = $RightArmPosition2D.position
-	right_pin_joint.node_a = get_path()
-	right_pin_joint.node_b = body.get_path()
-	right_pin_joint.bias = 0.9
-	if (!right_hand_grab):
-		add_child(right_pin_joint)
-		right_hand_grab = true
+		_grab_right_hand(body)
+		_right_monkey = monkey
+	elif (Input.is_action_pressed("grab")):
+		_grab_right_hand(body)
+		_liana_grabbed = true
 
 
 func _on_LeftArmArea2D_body_entered(body):
-	if (Input.is_action_pressed("grab") or left_monkey != null):
-		return
-	var monkey = body as Monkey
-	if (monkey != null):
-		left_monkey = monkey
-		event_bus.emit_signal('monkey_grabbed')
-	left_pin_joint.position = $LeftArmPosition2D.position
-	left_pin_joint.node_a = get_path()
-	left_pin_joint.node_b = body.get_path()
-	left_pin_joint.bias = 0.9
-	if (!left_pin_joint):
-		add_child(left_pin_joint)
-		left_hand_grab = true
-
-func _release_liana():
-	if (right_monkey != null):
+	if (_left_monkey != null):
 		return
 		
-	right_pin_joint.node_b = get_path()
-	right_hand_grab = false
+	if (_liana_grabbed):
+		return
+	
+	var monkey = body as Monkey
+	if (monkey != null):
+		_grab_left_hand(body)
+		_left_monkey = monkey
+	elif (Input.is_action_pressed("grab")):
+		_grab_left_hand(body)
+		_liana_grabbed = true
+
+
+func _release_liana():
+	_release_right_hand()
+	_release_left_hand()
+	print("liana release")
+
+
+func _grab_right_hand(body):
+	_right_pin_joint.position = $RightArmPosition2D.position
+	_right_pin_joint.node_b = body.get_path()
+
+
+func _grab_left_hand(body):
+	_left_pin_joint.position = $LeftArmPosition2D.position
+	_left_pin_joint.node_b = body.get_path()
+
+
+func _release_right_hand():
+	if (_right_monkey != null):
+		return
+		
+	_right_pin_joint.node_b = get_path()
+	_liana_grabbed = false
+
+
+func _release_left_hand():
+	if (_left_monkey != null):
+		return
+		
+	_left_pin_joint.node_b = get_path()
+	_liana_grabbed = false
