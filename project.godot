@@ -41,6 +41,7 @@ grab={
 2d_physics/layer_1="monkey"
 2d_physics/layer_2="arm"
 2d_physics/layer_3="liana"
+2d_physics/layer_4="spikes"
 
 [physics]
 
