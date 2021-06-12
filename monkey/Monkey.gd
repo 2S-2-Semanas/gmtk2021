@@ -36,7 +36,7 @@ func _physics_process(_delta):
 		_direction = 0
 		
 	if (Input.is_action_just_released("grab")):
-		if(MonkeyGlobal._liana_grabbed and _current_monkey_liana_grabbed):
+		if(_current_monkey_liana_grabbed):
 			apply_impulse(Vector2.ZERO, Vector2(IMPULSE_AFTER_RELEASE.x * _direction, IMPULSE_AFTER_RELEASE.y))
 		_release_lianas()
 	if (MonkeyGlobal._liana_grabbed and _current_monkey_liana_grabbed):
