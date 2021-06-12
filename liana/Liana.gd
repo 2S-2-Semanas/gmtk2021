@@ -18,9 +18,10 @@ func _ready():
 	for i in range(0, size):
 
 		var segment = segmentScene.instance() 
-		segment.position.y = segment.joinPoint
-		segments.append(segment) 
+	 
+
 		lastSegment.add_child(segment)
+		segments.append(segment)  
 
 		var joint = PinJoint2D.new()
 		joint.disable_collision = true
@@ -29,8 +30,8 @@ func _ready():
 
 		joint.node_a = lastSegment.get_path()
 		joint.node_b = segment.get_path() 
-		joint.position.y = segment.joinPoint
 
 		lastSegment.add_child(joint)  
+		
 
 		lastSegment = segment 
