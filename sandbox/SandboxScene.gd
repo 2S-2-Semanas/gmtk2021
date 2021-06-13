@@ -22,7 +22,7 @@ func _ready():
 	random_generator.add_initial_rock_position($ThirdColumnPosition.get_global_transform().origin)
 	random_generator.add_initial_rock_position($ForthColumnPosition.get_global_transform().origin)
 	random_generator.emit_signal('rock_generator_loaded')
-	print($FirstColumnPosition2.global_position)
+#	print($FirstColumnPosition2.global_position)
 	print($Node2D/Camera2D.global_position)
 
 func on_banana_eated():
