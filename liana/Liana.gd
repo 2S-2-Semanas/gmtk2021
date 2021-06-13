@@ -1,5 +1,4 @@
 extends Node2D
-
 class_name Liana
 
 const SegmentScene = preload("res://liana/lianaSegment/LianaSegment.tscn")
@@ -37,7 +36,5 @@ func _ready():
 		
 		lastSegment = segment 
 
-
 func get_current_position():
 	return $Origin.global_position
-
