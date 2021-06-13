@@ -23,13 +23,12 @@ func _ready():
 	random_generator.connect_timer(element_timer)
 	print()
 	random_generator.configure(self)
-	random_generator.add_initial_rock_position($FirstColumnPosition.get_global_transform().origin)
-	random_generator.add_initial_rock_position($SecondColumnPosition.get_global_transform().origin)
-	random_generator.add_initial_rock_position($ThirdColumnPosition.get_global_transform().origin)
-	random_generator.add_initial_rock_position($ForthColumnPosition.get_global_transform().origin)
+	random_generator.add_initial_position($FirstColumnPosition.get_global_transform().origin, $BananaFirstColumnPosition.get_global_transform().origin)
+	random_generator.add_initial_position($SecondColumnPosition.get_global_transform().origin, $BananaSecondColumnPosition.get_global_transform().origin)
+	random_generator.add_initial_position($ThirdColumnPosition.get_global_transform().origin, $BananaThirdColumnPosition.get_global_transform().origin)
+	random_generator.add_initial_position($ForthColumnPosition.get_global_transform().origin, $BananaForthColumnPosition.get_global_transform().origin)
 	random_generator.emit_signal('rock_generator_loaded')
 #	print($FirstColumnPosition2.global_position)
-	print($Node2D/Camera2D.global_position)
 
 func on_banana_eated():
 	print('banana eated mmm') 

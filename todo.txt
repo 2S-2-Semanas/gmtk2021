@@ -1,13 +1,13 @@
 Lista de quereheceres
 
-*hacer que las lianas salgan siempre - Elena
 *monos aparezcan desde arriba y que caigan. un buen random xd
-*camara sigue al mono pero si el mono va para atras muere (la camara siempre avanza de izq a derecha siguiendo al mono) si sales de la camara por la izq te moriste
-*puntos -> +100 por platano
-*hacer que los platanos aparezcan random
-*leer las instrucciones de entrega (mirar twitter, antes de las 7)
-*game_over -> caerte al agua. imagen del gameover que salga un cocodrilo
-*pinchos. flotando y si chocas con el se te caen los monos desde ahi ( desde la altura del choque)
-*fondo (preferiblemente parallex)
+
+*puntos -> +100 por platano - Miguel
+
+*hacer que los platanos aparezcan random - Elena
+
+
+*fondo (preferiblemente parallex) - Ivan
+
 *menu
 
