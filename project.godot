@@ -28,6 +28,7 @@ config/icon="res://icon.png"
 
 event_bus="*res://event_bus.gd"
 MonkeyGlobal="*res://monkey/MonkeyGlobal.gd"
+ScoreGlobal="*res://score/ScoreGlobal.gd"
 
 [input]
 

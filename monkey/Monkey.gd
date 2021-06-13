@@ -5,8 +5,12 @@ class_name Monkey
 const IMPULSE := Vector2(1500, 150)
 const IMPULSE_AFTER_RELEASE := Vector2(300, -1000)
 
-signal liana_grabed
+signal liana_grabbed
 signal liana_released
+signal distance_calculated
+
+var initial_fly_point := 0
+var final_fly_point := 0
 
 var _left_pin_joint: PinJoint2D
 var _right_pin_joint: PinJoint2D
@@ -29,8 +33,15 @@ func _ready():
 	_init_left_pin_joint()
 	_init_right_pin_joint()
 	
-	connect("liana_grabed", MonkeyGlobal, "_grab_liana")
-	connect("liana_released", MonkeyGlobal, "_release_liana") 
+	connect("liana_grabbed", MonkeyGlobal, "_grab_liana")
+	connect("liana_released", MonkeyGlobal, "_release_liana")
+	
+	connect("distance_calculated", ScoreGlobal, "stop")
+	
+	MonkeyGlobal.connect("fly_started", self, "_start_fly")
+	MonkeyGlobal.connect("fly_ended", self, "_stop_fly")
+	
+	initial_fly_point = global_position.x
 
 func _physics_process(_delta):
 	if Input.is_action_pressed("ui_left"):
@@ -77,8 +88,8 @@ func _on_RightArmArea2D_body_entered(body):
 
 	if (monkey == null) && (Input.is_action_pressed("grab") and !MonkeyGlobal._liana_grabbed):
 		_grab_right_hand(body)
-
-		emit_signal("liana_grabed")
+		
+		emit_signal("liana_grabbed")
 
 		_current_monkey_liana_grabbed = true
 		_liana_grabbed_left = false
@@ -91,8 +102,10 @@ func _on_LeftArmArea2D_body_entered(body):
 	
 	var monkey = body as Monkey
 	if (monkey == null) && (Input.is_action_pressed("grab") and !MonkeyGlobal._liana_grabbed):
-		_grab_left_hand(body) 
-		emit_signal("liana_grabed")
+		_grab_left_hand(body)
+		
+		emit_signal("liana_grabbed")
+		
 		_current_monkey_liana_grabbed = true
 		_liana_grabbed_left = true
 		_liana_grabbed_right = false 
@@ -182,4 +195,12 @@ func _release_left_hand():
 	if (_liana_grabbed_left):
 		emit_signal("liana_released")
 		_current_monkey_liana_grabbed = false 
-		_liana_grabbed_left = false 
+		_liana_grabbed_left = false
+
+func _start_fly():
+	initial_fly_point = global_position.x
+
+
+func _stop_fly():
+	final_fly_point = global_position.x
+	emit_signal("distance_calculated", final_fly_point - initial_fly_point)
