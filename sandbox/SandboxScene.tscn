@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://monkey/Monkey.tscn" type="PackedScene" id=1]
+[ext_resource path="res://UI/GameOver/GameOverScene.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Camera/Camera.tscn" type="PackedScene" id=4]
 [ext_resource path="res://sandbox/SandboxScene.gd" type="Script" id=6]
 [ext_resource path="res://icon.png" type="Texture" id=7]
@@ -8,6 +9,7 @@
 [ext_resource path="res://utils/ElementTimer.gd" type="Script" id=9]
 
 [node name="Sandbox" type="Node2D"]
+position = Vector2( 1.5874, 0 )
 script = ExtResource( 6 )
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -50,5 +52,14 @@ position = Vector2( 265.943, 34.9165 )
 
 [node name="Monkey3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 200.841, 30.4266 )
+
+[node name="GameOverCamera" type="Camera2D" parent="."]
+position = Vector2( -1654.88, -605.445 )
+
+[node name="GameOverScene" parent="GameOverCamera" instance=ExtResource( 2 )]
+margin_left = -513.536
+margin_top = -302.04
+margin_right = -513.536
+margin_bottom = -302.04
 
 [connection signal="timeout" from="LianaTimer" to="LianaTimer" method="_on_LianaTimer_timeout"]
