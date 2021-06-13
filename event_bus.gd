@@ -18,3 +18,5 @@ signal game_over
 signal monkey_grabbed
 
 signal banana_eated
+
+signal restart_game
