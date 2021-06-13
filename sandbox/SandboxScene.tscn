@@ -4,10 +4,10 @@
 [ext_resource path="res://sandbox/Ground.tscn" type="PackedScene" id=2]
 [ext_resource path="res://sandbox/Rock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://monkey/CameraMovement.gd" type="Script" id=4]
-[ext_resource path="res://liana/Liana.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sandbox/SandboxScene.gd" type="Script" id=6]
 [ext_resource path="res://icon.png" type="Texture" id=7]
 [ext_resource path="res://banana/Banana.tscn" type="PackedScene" id=8]
+[ext_resource path="res://utils/ElementTimer.gd" type="Script" id=9]
 
 [node name="Sandbox" type="Node2D"]
 script = ExtResource( 6 )
@@ -32,16 +32,25 @@ position = Vector2( 516.188, 608.112 )
 position = Vector2( -351.439, -613.652 )
 
 [node name="Monkey2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 660.394, -104.353 )
-
-[node name="Liana" parent="." instance=ExtResource( 5 )]
-position = Vector2( 407.944, 61.6606 )
-
-[node name="Liana2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 685.029, 34.3089 )
-
-[node name="Liana3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 513.783, 29.552 )
+position = Vector2( 192, -720 )
 
 [node name="Banana" parent="." instance=ExtResource( 8 )]
 position = Vector2( 605.306, 220.003 )
+
+[node name="LianaTimer" type="Timer" parent="."]
+autostart = true
+script = ExtResource( 9 )
+
+[node name="FirstColumnPosition" type="Position2D" parent="."]
+position = Vector2( 160, 96 )
+
+[node name="SecondColumnPosition" type="Position2D" parent="."]
+position = Vector2( 416, 96 )
+
+[node name="ThirdColumnPosition" type="Position2D" parent="."]
+position = Vector2( 736, 96 )
+
+[node name="ForthColumnPosition" type="Position2D" parent="."]
+position = Vector2( 992, 96 )
+
+[connection signal="timeout" from="LianaTimer" to="LianaTimer" method="_on_LianaTimer_timeout"]

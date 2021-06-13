@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "Monkey",
 "language": "GDScript",
 "path": "res://monkey/Monkey.gd"
+}, {
+"base": "Node",
+"class": "RandomGenerator",
+"language": "GDScript",
+"path": "res://utils/RandomGenerator.gd"
 } ]
 _global_script_class_icons={
-"Monkey": ""
+"Monkey": "",
+"RandomGenerator": ""
 }
 
 [application]
