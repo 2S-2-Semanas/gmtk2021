@@ -54,6 +54,11 @@ event_bus="*res://event_bus.gd"
 MonkeyGlobal="*res://monkey/MonkeyGlobal.gd"
 ScoreGlobal="*res://score/ScoreGlobal.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="keep_height"
+
 [input]
 
 grab={
