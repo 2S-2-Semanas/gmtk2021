@@ -45,4 +45,10 @@ position = Vector2( 736, 96 )
 [node name="ForthColumnPosition" type="Position2D" parent="."]
 position = Vector2( 992, 96 )
 
+[node name="Monkey" parent="." instance=ExtResource( 1 )]
+position = Vector2( 265.943, 34.9165 )
+
+[node name="Monkey3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 200.841, 30.4266 )
+
 [connection signal="timeout" from="LianaTimer" to="LianaTimer" method="_on_LianaTimer_timeout"]
