@@ -9,13 +9,31 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Liana",
+"language": "GDScript",
+"path": "res://liana/Liana.gd"
+}, {
+"base": "RigidBody2D",
+"class": "LianaSegment",
+"language": "GDScript",
+"path": "res://liana/lianaSegment/LianaSegment.gd"
+}, {
 "base": "RigidBody2D",
 "class": "Monkey",
 "language": "GDScript",
 "path": "res://monkey/Monkey.gd"
+}, {
+"base": "Node",
+"class": "RandomGenerator",
+"language": "GDScript",
+"path": "res://utils/RandomGenerator.gd"
 } ]
 _global_script_class_icons={
-"Monkey": ""
+"Liana": "",
+"LianaSegment": "",
+"Monkey": "",
+"RandomGenerator": ""
 }
 
 [application]
@@ -28,6 +46,7 @@ config/icon="res://icon.png"
 
 event_bus="*res://event_bus.gd"
 MonkeyGlobal="*res://monkey/MonkeyGlobal.gd"
+ScoreGlobal="*res://score/ScoreGlobal.gd"
 
 [input]
 

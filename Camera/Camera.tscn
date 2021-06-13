@@ -17,3 +17,8 @@ collision_layer = 0
 [node name="AdvanceAreaCollisionShape" type="CollisionShape2D" parent="AdvanceArea"]
 modulate = Color( 0.976471, 0.87451, 0.407843, 1 )
 shape = SubResource( 1 )
+
+[node name="BackAreaCollisionShape" type="CollisionShape2D" parent="AdvanceArea"]
+modulate = Color( 0.976471, 0.87451, 0.407843, 1 )
+position = Vector2( -1083.55, 0 )
+shape = SubResource( 1 )

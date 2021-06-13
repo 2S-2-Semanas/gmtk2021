@@ -2,17 +2,23 @@ extends RigidBody2D
 
 class_name Monkey
 
-const IMPULSE := Vector2(12000, 1200)
-const IMPULSE_AFTER_RELEASE := Vector2(300, -1000)
-
 signal liana_grabed
 signal liana_released
+signal distance_calculated
+
+const IMPULSE_MODULE := 10
+const RELEASE_MULTIPLIER := 10
+
+var initial_fly_point := 0
+var final_fly_point := 0
 
 var _left_pin_joint: PinJoint2D
 var _right_pin_joint: PinJoint2D
 
 var _right_monkey: Monkey = null
 var _left_monkey: Monkey = null
+
+var _grabbed_liana
 
 var _current_monkey_liana_grabbed:= false
 var _liana_grabbed_left:= false
@@ -21,7 +27,8 @@ var _liana_grabbed_right:= false
 var _direction := 0
 var _speed := 1
 
-var _last_monkey = ''
+var _impulse_vector: Vector2
+var _impulse_angle: float
 
 func _init():
 	_init_left_pin_joint()
@@ -31,8 +38,15 @@ func _ready():
 	_init_left_pin_joint()
 	_init_right_pin_joint()
 	
-	connect("liana_grabed", MonkeyGlobal, "_grab_liana")
-	connect("liana_released", MonkeyGlobal, "_release_liana") 
+	connect("liana_grabbed", MonkeyGlobal, "_grab_liana")
+	connect("liana_released", MonkeyGlobal, "_release_liana")
+	
+	connect("distance_calculated", ScoreGlobal, "stop")
+	
+	MonkeyGlobal.connect("fly_started", self, "_start_fly")
+	MonkeyGlobal.connect("fly_ended", self, "_stop_fly")
+	
+	initial_fly_point = global_position.x
 
 func _physics_process(_delta):
 	if Input.is_action_pressed("ui_left"):
@@ -41,18 +55,19 @@ func _physics_process(_delta):
 		_direction = _speed
 	else:
 		_direction = 0
+	
+	_impulse_vector = Vector2.ZERO
+	if(_grabbed_liana != null and _direction != 0):
+		_impulse_vector = _calculate_liana_angle(_grabbed_liana.get_current_position(), _direction)
+		_impulse_angle = abs(cos(_impulse_vector.angle()))
 		
 	if (Input.is_action_just_released("grab")):
 		if(_current_monkey_liana_grabbed):
-			apply_impulse(Vector2.ZERO, Vector2(IMPULSE_AFTER_RELEASE.x * _direction, IMPULSE_AFTER_RELEASE.y))
+			apply_impulse(Vector2.DOWN, _impulse_vector * IMPULSE_MODULE * RELEASE_MULTIPLIER)
 		_release_lianas()
 	if (MonkeyGlobal._liana_grabbed and _current_monkey_liana_grabbed):
-		var resulting_impulse = IMPULSE
-		resulting_impulse.x = IMPULSE.x * _direction *_delta
-		resulting_impulse.y = IMPULSE.y * _delta
-#		apply_impulse(Vector2.ZERO, resulting_impulse)
-		apply_impulse(Vector2.ZERO, resulting_impulse)
-#		apply_impulseVector2.ZERO, resulting_impulse)
+		apply_impulse(Vector2.DOWN, _impulse_vector * IMPULSE_MODULE * _impulse_angle)
+
 
 
 func _init_right_pin_joint():
@@ -79,8 +94,8 @@ func _on_RightArmArea2D_body_entered(body):
 
 	if (monkey == null) && (Input.is_action_pressed("grab") and !MonkeyGlobal._liana_grabbed):
 		_grab_right_hand(body)
-
-		emit_signal("liana_grabed")
+		_grabbed_liana = body.liana
+		emit_signal("liana_grabbed")
 
 		_current_monkey_liana_grabbed = true
 		_liana_grabbed_left = false
@@ -93,8 +108,10 @@ func _on_LeftArmArea2D_body_entered(body):
 	
 	var monkey = body as Monkey
 	if (monkey == null) && (Input.is_action_pressed("grab") and !MonkeyGlobal._liana_grabbed):
-		_grab_left_hand(body) 
-		emit_signal("liana_grabed")
+		_grab_left_hand(body)
+		_grabbed_liana = body.liana
+		emit_signal("liana_grabbed")
+		
 		_current_monkey_liana_grabbed = true
 		_liana_grabbed_left = true
 		_liana_grabbed_right = false 
@@ -181,7 +198,8 @@ func check_grab_monkey(monkey: Monkey, is_left_hand):
 
 func _release_liana():
 	_release_right_hand()
-	_release_left_hand()  
+	_release_left_hand()
+	_grabbed_liana = null
 
 func _grab_right_hand(body):
 	_right_pin_joint.position = $RightArmPosition2D.position
@@ -221,6 +239,7 @@ func _release_left_hand():
 		emit_signal("liana_released")
 		_current_monkey_liana_grabbed = false 
 		_liana_grabbed_left = false 
+
 		print('liana released left')
 		_left_pin_joint.node_b = get_path() 
 
@@ -237,3 +256,17 @@ func free_last_monkey():
 		_right_monkey = null
 		_last_monkey = ''
 
+func _start_fly():
+	initial_fly_point = global_position.x
+
+
+func _stop_fly():
+	final_fly_point = global_position.x
+	emit_signal("distance_calculated", final_fly_point - initial_fly_point)
+
+
+func _calculate_liana_angle(liana_position: Vector2, direction: int):
+	var liana_vector = global_position - liana_position
+	var impulse_vector = liana_vector.rotated(deg2rad(90 *  - direction))
+	var normalized = impulse_vector.normalized()
+	return normalized 
