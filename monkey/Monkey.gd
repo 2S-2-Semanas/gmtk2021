@@ -2,12 +2,12 @@ extends RigidBody2D
 
 class_name Monkey
 
-const IMPULSE := Vector2(1500, 150)
-const IMPULSE_AFTER_RELEASE := Vector2(300, -1000)
-
 signal liana_grabbed
 signal liana_released
 signal distance_calculated
+
+const IMPULSE_MODULE := 10
+const RELEASE_MULTIPLIER := 10
 
 var initial_fly_point := 0
 var final_fly_point := 0
@@ -18,12 +18,17 @@ var _right_pin_joint: PinJoint2D
 var _right_monkey: Monkey
 var _left_monkey: Monkey
 
+var _grabbed_liana
+
 var _current_monkey_liana_grabbed:= false
 var _liana_grabbed_left:= false
 var _liana_grabbed_right:= false 
 
 var _direction := 0
 var _speed := 1
+
+var _impulse_vector: Vector2
+var _impulse_angle: float
 
 func _init():
 	_init_left_pin_joint()
@@ -50,18 +55,19 @@ func _physics_process(_delta):
 		_direction = _speed
 	else:
 		_direction = 0
+	
+	_impulse_vector = Vector2.ZERO
+	if(_grabbed_liana != null and _direction != 0):
+		_impulse_vector = _calculate_liana_angle(_grabbed_liana.get_current_position(), _direction)
+		_impulse_angle = abs(cos(_impulse_vector.angle()))
 		
 	if (Input.is_action_just_released("grab")):
 		if(_current_monkey_liana_grabbed):
-			apply_impulse(Vector2.ZERO, Vector2(IMPULSE_AFTER_RELEASE.x * _direction, IMPULSE_AFTER_RELEASE.y))
+			apply_impulse(Vector2.DOWN, _impulse_vector * IMPULSE_MODULE * RELEASE_MULTIPLIER)
 		_release_lianas()
 	if (MonkeyGlobal._liana_grabbed and _current_monkey_liana_grabbed):
-		var resulting_impulse = IMPULSE
-		resulting_impulse.x = IMPULSE.x * _direction *_delta
-		resulting_impulse.y = IMPULSE.y * _delta
-#		apply_impulse(Vector2.ZERO, resulting_impulse)
-		apply_impulse(Vector2.ZERO, resulting_impulse)
-#		apply_impulseVector2.ZERO, resulting_impulse)
+		apply_impulse(Vector2.DOWN, _impulse_vector * IMPULSE_MODULE * _impulse_angle)
+
 
 
 func _init_right_pin_joint():
@@ -88,7 +94,7 @@ func _on_RightArmArea2D_body_entered(body):
 
 	if (monkey == null) && (Input.is_action_pressed("grab") and !MonkeyGlobal._liana_grabbed):
 		_grab_right_hand(body)
-		
+		_grabbed_liana = body.liana
 		emit_signal("liana_grabbed")
 
 		_current_monkey_liana_grabbed = true
@@ -103,7 +109,7 @@ func _on_LeftArmArea2D_body_entered(body):
 	var monkey = body as Monkey
 	if (monkey == null) && (Input.is_action_pressed("grab") and !MonkeyGlobal._liana_grabbed):
 		_grab_left_hand(body)
-		
+		_grabbed_liana = body.liana
 		emit_signal("liana_grabbed")
 		
 		_current_monkey_liana_grabbed = true
@@ -155,7 +161,8 @@ func check_grab_monkey(monkey: Monkey, is_left_hand):
 
 func _release_liana():
 	_release_right_hand()
-	_release_left_hand()  
+	_release_left_hand()
+	_grabbed_liana = null
 
 func _grab_right_hand(body):
 	_right_pin_joint.position = $RightArmPosition2D.position
@@ -195,7 +202,8 @@ func _release_left_hand():
 	if (_liana_grabbed_left):
 		emit_signal("liana_released")
 		_current_monkey_liana_grabbed = false 
-		_liana_grabbed_left = false
+		_liana_grabbed_left = false 
+
 
 func _start_fly():
 	initial_fly_point = global_position.x
@@ -204,3 +212,10 @@ func _start_fly():
 func _stop_fly():
 	final_fly_point = global_position.x
 	emit_signal("distance_calculated", final_fly_point - initial_fly_point)
+
+
+func _calculate_liana_angle(liana_position: Vector2, direction: int):
+	var liana_vector = global_position - liana_position
+	var impulse_vector = liana_vector.rotated(deg2rad(90 *  - direction))
+	var normalized = impulse_vector.normalized()
+	return normalized

@@ -15,6 +15,11 @@ _global_script_classes=[ {
 "path": "res://liana/Liana.gd"
 }, {
 "base": "RigidBody2D",
+"class": "LianaSegment",
+"language": "GDScript",
+"path": "res://liana/lianaSegment/LianaSegment.gd"
+}, {
+"base": "RigidBody2D",
 "class": "Monkey",
 "language": "GDScript",
 "path": "res://monkey/Monkey.gd"
@@ -26,6 +31,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Liana": "",
+"LianaSegment": "",
 "Monkey": "",
 "RandomGenerator": ""
 }

@@ -1,8 +1,7 @@
 extends Node2D
 class_name Liana
 
-#onready var advance_area : Area2D = $
-var segmentScene = preload('res://liana/lianaSegment/LianaSegment.tscn')
+const SegmentScene = preload("res://liana/lianaSegment/LianaSegment.tscn")
 
 var segments: Array = []
 
@@ -11,16 +10,16 @@ var size = 30
 onready var origin = $Origin 
 
 func _ready():
-#	advance_area.connect('body_entered', self, 'on_advance_body_entered')
-	var lastSegment = segmentScene.instance()
+
+	var lastSegment = SegmentScene.instance()
 
 	lastSegment = origin
 
 	for i in range(0, size):
-
-		var segment = segmentScene.instance() 
-	 
-
+		
+		var segment = SegmentScene.instance()
+		segment.liana = self
+		
 		lastSegment.add_child(segment)
 		segments.append(segment)  
 
@@ -30,12 +29,12 @@ func _ready():
 		joint.softness = 0.1
 
 		joint.node_a = lastSegment.get_path()
-		joint.node_b = segment.get_path() 
+		joint.node_b = segment.get_path()
+		joint.bias = 0
 
 		lastSegment.add_child(joint)  
 		
-
 		lastSegment = segment 
 
-#func _process(delta: float) -> void:
-#
+func get_current_position():
+	return $Origin.global_position
