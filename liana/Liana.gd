@@ -26,6 +26,8 @@ func _ready():
 
 		var joint = PinJoint2D.new()
 		joint.disable_collision = true
+		joint.bias = 0.0
+		joint.softness = 0.1
 
 		joint.node_a = lastSegment.get_path()
 		joint.node_b = segment.get_path()
@@ -38,3 +40,4 @@ func _ready():
 
 func get_current_position():
 	return $Origin.global_position
+

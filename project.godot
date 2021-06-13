@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "Monkey",
 "language": "GDScript",
 "path": "res://monkey/Monkey.gd"
+}, {
+"base": "Node",
+"class": "RandomGenerator",
+"language": "GDScript",
+"path": "res://utils/RandomGenerator.gd"
 } ]
 _global_script_class_icons={
 "Liana": "",
 "LianaSegment": "",
 "Monkey": ""
+"RandomGenerator": ""
 }
 
 [application]
@@ -40,6 +46,7 @@ config/icon="res://icon.png"
 
 event_bus="*res://event_bus.gd"
 MonkeyGlobal="*res://monkey/MonkeyGlobal.gd"
+ScoreGlobal="*res://score/ScoreGlobal.gd"
 
 [input]
 
