@@ -2,7 +2,7 @@ extends RigidBody2D
 
 class_name Monkey
 
-signal liana_grabed
+signal liana_grabbed
 signal liana_released
 signal distance_calculated
 
@@ -135,11 +135,7 @@ func _on_LeftArmArea2D_area_entered(area: Area2D):
 
 			_grab_left_hand(monkey) 
 			event_bus.emit_signal('monkey_grabbed')
-			_left_monkey = monkey
-
-			
-
-			_last_monkey = 'left'
+			_left_monkey = monkey 
 		
 
 func _on_RightArmArea2D_area_entered(area: Area2D): 
@@ -163,10 +159,7 @@ func _on_RightArmArea2D_area_entered(area: Area2D):
 
 			_grab_right_hand(monkey) 
 			event_bus.emit_signal('monkey_grabbed')
-			_right_monkey = monkey
-
-			_last_monkey = 'right'
-
+			_right_monkey = monkey  
 
 func check_grab_monkey(monkey: Monkey, is_left_hand):
 	if (monkey._left_monkey != null && monkey._left_monkey == self):
@@ -223,8 +216,7 @@ func _release_right_hand():
 	if (_liana_grabbed_right):
 		emit_signal("liana_released")
 		_current_monkey_liana_grabbed = false 
-		_liana_grabbed_right = false
-		print('liana released right')
+		_liana_grabbed_right = false 
 		_right_pin_joint.node_b = get_path() 
 
 	if (_right_monkey != null):
@@ -238,23 +230,13 @@ func _release_left_hand():
 	if (_liana_grabbed_left):
 		emit_signal("liana_released")
 		_current_monkey_liana_grabbed = false 
-		_liana_grabbed_left = false 
-
-		print('liana released left')
+		_liana_grabbed_left = false  
 		_left_pin_joint.node_b = get_path() 
 
 	if (_left_monkey != null):
 		return
 		
 	_left_pin_joint.node_b = get_path() 
-
-func free_last_monkey():
-	if(_last_monkey == 'left'):
-		_left_monkey = null
-		_last_monkey = ''
-	if(_last_monkey == 'right'):
-		_right_monkey = null
-		_last_monkey = ''
 
 func _start_fly():
 	initial_fly_point = global_position.x
