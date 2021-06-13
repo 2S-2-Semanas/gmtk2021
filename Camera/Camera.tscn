@@ -1,9 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://monkey/CameraMovement.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 200, 1900.38 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 1559.69, 59.7719 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 100, 2000 )
 
 [node name="Camera2D" type="Camera2D"]
 current = true
@@ -17,3 +23,18 @@ collision_layer = 0
 [node name="AdvanceAreaCollisionShape" type="CollisionShape2D" parent="AdvanceArea"]
 modulate = Color( 0.976471, 0.87451, 0.407843, 1 )
 shape = SubResource( 1 )
+
+[node name="DeathFloor" type="Area2D" parent="."]
+position = Vector2( 0, 392.273 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathFloor"]
+modulate = Color( 1, 0, 0, 1 )
+shape = SubResource( 2 )
+
+[node name="DeathBack" type="Area2D" parent="."]
+position = Vector2( -612.173, 3.36359 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathBack"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( -114.362, -15.7067 )
+shape = SubResource( 3 )

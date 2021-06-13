@@ -67,7 +67,7 @@ func _physics_process(_delta):
 		if(_current_monkey_liana_grabbed):
 			apply_impulse(Vector2.DOWN, _impulse_vector * IMPULSE_MODULE * RELEASE_MULTIPLIER * _impulse_angle * MonkeyGlobal.n_monkeys)
 		_release_lianas()
-	if (MonkeyGlobal._liana_grabbed and _current_monkey_liana_grabbed):
+	if (MonkeyGlobal.is_liana_grabbed and _current_monkey_liana_grabbed):
 		apply_impulse(Vector2.DOWN, _impulse_vector * IMPULSE_MODULE * _impulse_angle * MonkeyGlobal.n_monkeys)
 
 
@@ -94,7 +94,7 @@ func _on_RightArmArea2D_body_entered(body):
 	
 	var monkey = body as Monkey
 
-	if (monkey == null) && (Input.is_action_pressed("grab") and !MonkeyGlobal._liana_grabbed):
+	if (monkey == null) && (Input.is_action_pressed("grab") and !MonkeyGlobal.is_liana_grabbed):
 		_grab_right_hand(body)
 		_grabbed_liana = body.liana
 		emit_signal("liana_grabbed")
@@ -109,7 +109,7 @@ func _on_LeftArmArea2D_body_entered(body):
 		return
 	
 	var monkey = body as Monkey
-	if (monkey == null) && (Input.is_action_pressed("grab") and !MonkeyGlobal._liana_grabbed):
+	if (monkey == null) && (Input.is_action_pressed("grab") and !MonkeyGlobal.is_liana_grabbed):
 		_grab_left_hand(body)
 		_grabbed_liana = body.liana
 		emit_signal("liana_grabbed")
