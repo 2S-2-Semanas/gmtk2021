@@ -1,0 +1,98 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://banana/banana.png" type="Texture" id=1]
+[ext_resource path="res://UI/Points/Points.gd" type="Script" id=2]
+[ext_resource path="res://UI/fonts/press_start_2P/PressStart2P-Regular_16.tres" type="DynamicFont" id=3]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource( 2 )
+
+[node name="Control" type="Control" parent="."]
+margin_left = 0.0545349
+margin_top = 0.469818
+margin_right = 40.0545
+margin_bottom = 40.4698
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+margin_right = 472.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_constants/separation = 80
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/VBoxContainer/HBoxContainer"]
+margin_right = 148.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer/HBoxContainer/MarginContainer"]
+margin_right = 148.0
+margin_bottom = 32.0
+
+[node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+margin_top = 8.0
+margin_right = 112.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 3 )
+text = "Points:"
+
+[node name="Points" type="Label" parent="Control/VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 116.0
+margin_top = 8.0
+margin_right = 148.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 3 )
+text = " 0"
+
+[node name="Control" type="MarginContainer" parent="Control/VBoxContainer/HBoxContainer"]
+margin_left = 228.0
+margin_right = 300.0
+margin_bottom = 32.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer/HBoxContainer/Control"]
+margin_right = 72.0
+margin_bottom = 32.0
+
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/HBoxContainer/Control/HBoxContainer"]
+margin_right = 32.0
+margin_bottom = 32.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer/Control/HBoxContainer"]
+margin_left = 36.0
+margin_top = 8.0
+margin_right = 52.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 3 )
+text = ":"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bananas" type="Label" parent="Control/VBoxContainer/HBoxContainer/Control/HBoxContainer"]
+margin_left = 56.0
+margin_top = 8.0
+margin_right = 72.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 3 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
