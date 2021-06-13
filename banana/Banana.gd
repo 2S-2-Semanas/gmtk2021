@@ -1,4 +1,5 @@
 extends Node2D
+class_name Banana
 
 onready var banan_area: Area2D = $BananaArea 
 

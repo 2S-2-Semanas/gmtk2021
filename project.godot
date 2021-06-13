@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node2D",
+"class": "Banana",
+"language": "GDScript",
+"path": "res://banana/Banana.gd"
+}, {
+"base": "Node2D",
 "class": "Liana",
 "language": "GDScript",
 "path": "res://liana/Liana.gd"
@@ -30,6 +35,7 @@ _global_script_classes=[ {
 "path": "res://utils/RandomGenerator.gd"
 } ]
 _global_script_class_icons={
+"Banana": "",
 "Liana": "",
 "LianaSegment": "",
 "Monkey": "",
