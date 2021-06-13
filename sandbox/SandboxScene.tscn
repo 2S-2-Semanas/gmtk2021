@@ -32,7 +32,7 @@ position = Vector2( 516.188, 608.112 )
 position = Vector2( -351.439, -613.652 )
 
 [node name="Monkey2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 660.394, -104.353 )
+position = Vector2( 651.909, -33.6423 )
 
 [node name="Liana" parent="." instance=ExtResource( 5 )]
 position = Vector2( 407.944, 61.6606 )

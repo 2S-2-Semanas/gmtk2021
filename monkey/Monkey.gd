@@ -14,6 +14,8 @@ var _right_pin_joint: PinJoint2D
 var _right_monkey: Monkey
 var _left_monkey: Monkey
 
+var _grabbed_liana
+
 var _current_monkey_liana_grabbed:= false
 var _liana_grabbed_left:= false
 var _liana_grabbed_right:= false 
@@ -48,9 +50,10 @@ func _physics_process(_delta):
 		var resulting_impulse = IMPULSE
 		resulting_impulse.x = IMPULSE.x * _direction *_delta
 		resulting_impulse.y = IMPULSE.y * _delta
-#		apply_impulse(Vector2.ZERO, resulting_impulse)
 		apply_impulse(Vector2.ZERO, resulting_impulse)
-#		apply_impulseVector2.ZERO, resulting_impulse)
+	
+	if(_grabbed_liana != null):
+		_calculate_liana_angle(_grabbed_liana.get_current_position())
 
 
 func _init_right_pin_joint():
@@ -77,7 +80,9 @@ func _on_RightArmArea2D_body_entered(body):
 
 	if (monkey == null) && (Input.is_action_pressed("grab") and !MonkeyGlobal._liana_grabbed):
 		_grab_right_hand(body)
-
+		var grabbed_liana_segment = body as LianaSegment
+		if (grabbed_liana_segment != null):
+			_grabbed_liana = grabbed_liana_segment.liana
 		emit_signal("liana_grabed")
 
 		_current_monkey_liana_grabbed = true
@@ -183,3 +188,16 @@ func _release_left_hand():
 		emit_signal("liana_released")
 		_current_monkey_liana_grabbed = false 
 		_liana_grabbed_left = false 
+
+
+func _calculate_liana_angle(liana_position: Vector2):
+	var liana_vector = global_position - liana_position
+	liana_vector = liana_vector
+	var impulse_vector = liana_vector.rotated(deg2rad(90))
+	var norm = liana_vector.normalized()
+	if (norm.y < 0):
+		print("Parriba noo!! :(")
+	if (norm.x < 0):
+		print("izq")
+	else:
+		print("der")	
