@@ -93,9 +93,9 @@ func connect_timer(timer):
 	
 func _recalculate_initial_positions():
 	for i in range(1, max_columns + 1):
-		print('----previous----')
-		print(initial_element_positions[i-1].x)
+#		print('----previous----')
+#		print(initial_element_positions[i-1].x)
 		var increment = rand_range(initial_element_positions[i - 1].x + 64*4*3 + 64*2, initial_element_positions[i - 1].x + 64*4*4)
-		print('----new----')
-		print(increment)
+#		print('----new----')
+#		print(increment)
 		initial_element_positions[i - 1].x = increment # ADVANCE 4 POSITIONS

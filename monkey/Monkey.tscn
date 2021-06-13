@@ -25,7 +25,6 @@ animations = [ {
 height = 33.3668
 
 [node name="Monkey" type="RigidBody2D"]
-mass = 6.0
 gravity_scale = 1.5
 script = ExtResource( 2 )
 
