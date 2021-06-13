@@ -6,7 +6,8 @@ signal liana_grabbed
 signal liana_released
 signal distance_calculated
 
-const IMPULSE_MODULE := 40
+const IMPULSE_MODULE := 10
+const RELEASE_MULTIPLIER := 10
 
 var initial_fly_point := 0
 var final_fly_point := 0
@@ -62,10 +63,10 @@ func _physics_process(_delta):
 		
 	if (Input.is_action_just_released("grab")):
 		if(_current_monkey_liana_grabbed):
-			apply_impulse(Vector2.ZERO, _impulse_vector * IMPULSE_MODULE * 4)
+			apply_impulse(Vector2.DOWN, _impulse_vector * IMPULSE_MODULE * RELEASE_MULTIPLIER)
 		_release_lianas()
 	if (MonkeyGlobal._liana_grabbed and _current_monkey_liana_grabbed):
-		apply_impulse(Vector2.ZERO, _impulse_vector * IMPULSE_MODULE * _impulse_angle)
+		apply_impulse(Vector2.DOWN, _impulse_vector * IMPULSE_MODULE * _impulse_angle)
 
 
 
