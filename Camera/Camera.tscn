@@ -3,7 +3,7 @@
 [ext_resource path="res://monkey/CameraMovement.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 200, 500 )
+extents = Vector2( 200, 1900.38 )
 
 [node name="Camera2D" type="Camera2D"]
 current = true
