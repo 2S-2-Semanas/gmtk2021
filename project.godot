@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Liana",
+"language": "GDScript",
+"path": "res://liana/Liana.gd"
+}, {
 "base": "RigidBody2D",
 "class": "Monkey",
 "language": "GDScript",
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://utils/RandomGenerator.gd"
 } ]
 _global_script_class_icons={
+"Liana": "",
 "Monkey": "",
 "RandomGenerator": ""
 }

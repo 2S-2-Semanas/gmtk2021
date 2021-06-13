@@ -1,6 +1,7 @@
 extends Node2D
+class_name Liana
 
-
+#onready var advance_area : Area2D = $
 var segmentScene = preload('res://liana/lianaSegment/LianaSegment.tscn')
 
 var segments: Array = []
@@ -10,7 +11,7 @@ var size = 30
 onready var origin = $Origin 
 
 func _ready():
-
+#	advance_area.connect('body_entered', self, 'on_advance_body_entered')
 	var lastSegment = segmentScene.instance()
 
 	lastSegment = origin
@@ -36,3 +37,5 @@ func _ready():
 
 		lastSegment = segment 
 
+#func _process(delta: float) -> void:
+#

@@ -56,4 +56,7 @@ position = Vector2( 736, 96 )
 [node name="ForthColumnPosition" type="Position2D" parent="."]
 position = Vector2( 992, 96 )
 
+[node name="FirstColumnPosition2" type="Position2D" parent="."]
+position = Vector2( 520, 304 )
+
 [connection signal="timeout" from="LianaTimer" to="LianaTimer" method="_on_LianaTimer_timeout"]
