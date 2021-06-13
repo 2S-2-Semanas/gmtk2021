@@ -1,7 +1,7 @@
 Lista de quereheceres
 
-*hacer que las lianas salgan siempre
-*aparezcan desde arriba y que caigan. un buen random xd
+*hacer que las lianas salgan siempre - Elena
+*monos aparezcan desde arriba y que caigan. un buen random xd
 *camara sigue al mono pero si el mono va para atras muere (la camara siempre avanza de izq a derecha siguiendo al mono) si sales de la camara por la izq te moriste
 *puntos -> +100 por platano
 *hacer que los platanos aparezcan random
