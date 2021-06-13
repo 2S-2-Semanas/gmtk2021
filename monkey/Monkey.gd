@@ -2,7 +2,7 @@ extends RigidBody2D
 
 class_name Monkey
 
-const IMPULSE := Vector2(1500, 150)
+const IMPULSE := Vector2(12000, 1200)
 const IMPULSE_AFTER_RELEASE := Vector2(300, -1000)
 
 signal liana_grabed
@@ -11,8 +11,8 @@ signal liana_released
 var _left_pin_joint: PinJoint2D
 var _right_pin_joint: PinJoint2D
 
-var _right_monkey: Monkey
-var _left_monkey: Monkey
+var _right_monkey: Monkey = null
+var _left_monkey: Monkey = null
 
 var _current_monkey_liana_grabbed:= false
 var _liana_grabbed_left:= false
@@ -20,6 +20,8 @@ var _liana_grabbed_right:= false
 
 var _direction := 0
 var _speed := 1
+
+var _last_monkey = ''
 
 func _init():
 	_init_left_pin_joint()
@@ -102,18 +104,52 @@ func _on_LeftArmArea2D_area_entered(area: Area2D):
 	var monkey = area.get_parent() as Monkey
 	if (monkey != null): 
 		if(check_grab_monkey(monkey, true)):
+
+			var can_grab = false
+			if((area.get_name().find("Left") > -1) && monkey._left_monkey == null && !monkey._liana_grabbed_left):
+				monkey._left_monkey = self
+				can_grab = true
+			if((area.get_name().find("Right") > -1) && monkey._right_monkey == null  && !monkey._liana_grabbed_right):
+				monkey._right_monkey = self
+				can_grab = true 
+
+			if(!can_grab):
+				return 
+
 			_grab_left_hand(monkey) 
 			event_bus.emit_signal('monkey_grabbed')
-		_left_monkey = monkey
+			_left_monkey = monkey
+
+			
+
+			_last_monkey = 'left'
 		
 
 func _on_RightArmArea2D_area_entered(area: Area2D): 
 	var monkey = area.get_parent() as Monkey
 	if (monkey != null):
-		if(check_grab_monkey(monkey, false)):
+		if(monkey._left_monkey == self || monkey._right_monkey == self): 
+			return
+		if(check_grab_monkey(monkey, false)): 
+		
+			var can_grab = false
+
+			if((area.get_name().find("Left") > -1) && monkey._left_monkey == null && !monkey._liana_grabbed_left):
+				monkey._left_monkey = self
+				can_grab = true
+			if((area.get_name().find("Right") > -1) && monkey._right_monkey == null && !monkey._liana_grabbed_right):
+				monkey._right_monkey = self
+				can_grab = true
+
+			if(!can_grab):
+				return 
+
 			_grab_right_hand(monkey) 
 			event_bus.emit_signal('monkey_grabbed')
-		_right_monkey = monkey
+			_right_monkey = monkey
+
+			_last_monkey = 'right'
+
 
 func check_grab_monkey(monkey: Monkey, is_left_hand):
 	if (monkey._left_monkey != null && monkey._left_monkey == self):
@@ -128,6 +164,9 @@ func check_grab_monkey(monkey: Monkey, is_left_hand):
 		return false 
 
 	if (self._left_monkey != null && self._right_monkey != null):
+		return false
+
+	if(monkey._left_monkey == self || monkey._right_monkey == self):
 		return false
 		
 	if (is_left_hand):
@@ -162,24 +201,39 @@ func _release_lianas():
 
 
 func _release_right_hand():
-	if (_right_monkey != null):
-		return
-		
-	_right_pin_joint.node_b = get_path()
 
 	if (_liana_grabbed_right):
 		emit_signal("liana_released")
 		_current_monkey_liana_grabbed = false 
 		_liana_grabbed_right = false
+		print('liana released right')
+		_right_pin_joint.node_b = get_path() 
+
+	if (_right_monkey != null):
+		return
+		
+	_right_pin_joint.node_b = get_path() 
 
 
 func _release_left_hand():
-	if (_left_monkey != null):
-		return
-		
-	_left_pin_joint.node_b = get_path() 
 
 	if (_liana_grabbed_left):
 		emit_signal("liana_released")
 		_current_monkey_liana_grabbed = false 
 		_liana_grabbed_left = false 
+		print('liana released left')
+		_left_pin_joint.node_b = get_path() 
+
+	if (_left_monkey != null):
+		return
+		
+	_left_pin_joint.node_b = get_path() 
+
+func free_last_monkey():
+	if(_last_monkey == 'left'):
+		_left_monkey = null
+		_last_monkey = ''
+	if(_last_monkey == 'right'):
+		_right_monkey = null
+		_last_monkey = ''
+
