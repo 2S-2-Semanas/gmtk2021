@@ -57,6 +57,7 @@ func _physics_process(_delta):
 		_direction = 0
 	
 	_impulse_vector = Vector2.ZERO
+
 	if(_grabbed_liana != null and _direction != 0):
 		_impulse_vector = _calculate_liana_angle(_grabbed_liana.get_current_position(), _direction)
 		_impulse_angle = abs(cos(_impulse_vector.angle()))
@@ -187,12 +188,8 @@ func check_grab_monkey(monkey: Monkey, is_left_hand):
 		if(self._right_monkey != null || self._liana_grabbed_right):
 			return false 
 		
-	return true 
-
-func _release_liana():
-	_release_right_hand()
-	_release_left_hand()
-	_grabbed_liana = null
+	return true  
+	
 
 func _grab_right_hand(body):
 	_right_pin_joint.position = $RightArmPosition2D.position
@@ -209,6 +206,8 @@ func _grab_left_hand(body):
 func _release_lianas():
 	_release_right_hand()
 	_release_left_hand()
+
+	_grabbed_liana = null
 
 
 func _release_right_hand():
