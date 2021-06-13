@@ -25,6 +25,7 @@ var score_body_resource: Resource
 func _init():
 	element_resource = load('res://liana/Liana.tscn')
 	noise = OpenSimplexNoise.new()
+	randomize()
 	noise.seed = randi()
 	noise.octaves = 1.0
 	noise.period = 1.0
@@ -76,8 +77,12 @@ func _on_ElementTimer_timeout():
 #		last_opening = second_opening
 #		openings.append(second_opening)
 
+	generate_elements(camera, openings)
+	generate_elements(camera, openings)
+
+func generate_elements(camera, openings):
 	var elements = {}
-	var arr = range(1, max_columns + 1)
+	# var arr = range(1, max_columns + 1)
 	for i in range(1, max_columns + 1): 
 		var ignore_element = false
 
